@@ -89,6 +89,7 @@ else ifeq ($(arch1),aarch64)
 arch2=arm64
 else ifeq ($(arch1),loongarch64)
 arch2=loong64
+else
 $(error unsupported ARCH: $(arch1))
 endif
 
@@ -229,7 +230,7 @@ build: tidy bin/spire-server bin/spire-agent bin/k8s-workload-registrar bin/oidc
 
 define binary_rule
 .PHONY: $1
-$1: | go-check bin/
+$1: | bin/
 	@echo Building $1...
 	$(E)$(go_path) go build $$(go_flags) -ldflags $$(go_ldflags) -o $1$(exe) $2
 endef
@@ -361,7 +362,7 @@ oidc-discovery-provider-scratch-image: Dockerfile
 #############################################################################
 
 .PHONY: tidy tidy-check lint lint-code
-tidy: | go-check
+tidy:
 	$(E)$(go_path) go mod tidy
 	$(E)cd proto/spire; $(go_path) go mod tidy
 
