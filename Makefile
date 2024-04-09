@@ -463,19 +463,19 @@ dev-shell: | go-check
 # execute on the go binary and also need the right path in order to locate the
 # correct go binary.
 go-check:
-ifeq (go$(go_version), $(shell $(go_path) go version 2>/dev/null | cut -f3 -d' '))
-else ifeq ($(os1),windows)
-	@echo "Installing go$(go_version)..."
-	$(E)rm -rf $(dir $(go_dir))
-	$(E)mkdir -p $(go_dir)
-	$(E)curl -o $(go_dir)\go.zip -sSfL $(go_url) 
-	$(E)unzip -qq $(go_dir)\go.zip -d $(go_dir)
-else 
-	@echo "Installing go$(go_version)..."
-	$(E)rm -rf $(dir $(go_dir))
-	$(E)mkdir -p $(go_dir)
-	$(E)curl -sSfL $(go_url) | tar xz -C $(go_dir) --strip-components=1
-endif
+#ifeq (go$(go_version), $(shell $(go_path) go version 2>/dev/null | cut -f3 -d' '))
+#else ifeq ($(os1),windows)
+#	@echo "Installing go$(go_version)..."
+#	$(E)rm -rf $(dir $(go_dir))
+#	$(E)mkdir -p $(go_dir)
+#	$(E)curl -o $(go_dir)\go.zip -sSfL $(go_url) 
+#	$(E)unzip -qq $(go_dir)\go.zip -d $(go_dir)
+#else 
+#	@echo "Installing go$(go_version)..."
+#	$(E)rm -rf $(dir $(go_dir))
+#	$(E)mkdir -p $(go_dir)
+#	$(E)curl -sSfL $(go_url) | tar xz -C $(go_dir) --strip-components=1
+#endif
 
 go-bin-path: go-check
 	@echo "$(go_bin_dir):${PATH}"
